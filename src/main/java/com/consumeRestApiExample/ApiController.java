@@ -1,27 +1,20 @@
 package com.consumeRestApiExample;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
 import com.consumeRestApiExample.model.Driver;
 import com.consumeRestApiExample.model.Example;
 import com.consumeRestApiExample.model.Race;
 import com.consumeRestApiExample.model.Winner;
 import com.consumeRestApiExample.service.CallRestService;
-import com.consumeRestApiExample.service.WinnerServiceImpl;
 
 @RestController
 public class ApiController {
@@ -30,7 +23,7 @@ public class ApiController {
 	private CallRestService callRestService;
 	
 	@GetMapping("/winners")
-	public Example getExample() {
+	public Example getExample() throws IOException, InterruptedException {
 		return callRestService.httpCall();
 	}
 	

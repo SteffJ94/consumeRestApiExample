@@ -16,7 +16,7 @@ public class Winner {
 	private Long id;
 	
 	@Column(name = "Season")
-	private int season;
+	private String season;
 	
 	@Column(name = "RaceName")
 	private String raceName;
@@ -35,12 +35,12 @@ public class Winner {
 		this.id = id;
 	}
 
-	public int getSeason() {
+	public String getSeason() {
 		return season;
 	}
 
-	public void setSeason(int season) {
-		this.season = season;
+	public void setSeason(String string) {
+		this.season = string;
 	}
 
 	public String getRaceName() {
