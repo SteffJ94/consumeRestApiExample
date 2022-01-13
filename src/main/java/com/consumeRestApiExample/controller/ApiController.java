@@ -1,4 +1,4 @@
-package com.consumeRestApiExample;
+package com.consumeRestApiExample.controller;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.consumeRestApiExample.model.Driver;
-import com.consumeRestApiExample.model.Example;
-import com.consumeRestApiExample.model.Race;
-import com.consumeRestApiExample.model.Winner;
+import com.consumeRestApiExample.model.domain.Winner;
+import com.consumeRestApiExample.model.dto.Driver;
+import com.consumeRestApiExample.model.dto.Example;
+import com.consumeRestApiExample.model.dto.Race;
 import com.consumeRestApiExample.service.CallRestService;
 
 @RestController
@@ -24,7 +24,7 @@ public class ApiController {
 	
 	@GetMapping("/winners")
 	public Example getExample() throws IOException, InterruptedException {
-		return callRestService.httpCall();
+		return callRestService.httpCallTo3dPartApi();
 	}
 	
 	

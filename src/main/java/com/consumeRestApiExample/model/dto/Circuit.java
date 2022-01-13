@@ -1,4 +1,4 @@
-package com.consumeRestApiExample.model;
+package com.consumeRestApiExample.model.dto;
 
 import javax.annotation.Generated;
 import com.fasterxml.jackson.annotation.JsonProperty;

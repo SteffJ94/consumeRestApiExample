@@ -1,4 +1,4 @@
-package com.consumeRestApiExample.model;
+package com.consumeRestApiExample.model.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

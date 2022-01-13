@@ -1,4 +1,4 @@
-package com.consumeRestApiExample.model;
+package com.consumeRestApiExample.model.dto;
 
 import java.util.List;
 

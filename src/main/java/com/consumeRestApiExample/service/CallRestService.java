@@ -10,12 +10,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.jpa.provider.HibernateUtils;
 import org.springframework.stereotype.Service;
 
-import com.consumeRestApiExample.model.Example;
-import com.consumeRestApiExample.model.Race;
-import com.consumeRestApiExample.model.Result;
-import com.consumeRestApiExample.model.Winner;
+import com.consumeRestApiExample.model.domain.Winner;
+import com.consumeRestApiExample.model.dto.Example;
+import com.consumeRestApiExample.model.dto.Race;
+import com.consumeRestApiExample.model.dto.Result;
+import com.consumeRestApiExample.service.db.WinnerServiceImpl;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
@@ -25,10 +30,12 @@ public class CallRestService {
 	@Autowired
 	private WinnerServiceImpl winnerServiceImpl;
 	
-	private static final String API_URL_STRING = "https://ergast.com/api/f1/2009/results/1.json";
+	@Value("${app.http.url}")
+	private String API_URL_STRING;
+	
 	Example example = new Example();
 	
-	public Example httpCall() throws IOException, InterruptedException {
+	public Example httpCallTo3dPartApi() {
 		HttpClient client = HttpClient.newHttpClient();
 		HttpRequest request = HttpRequest.newBuilder()
 				.GET()
@@ -36,10 +43,18 @@ public class CallRestService {
 				.uri(URI.create(API_URL_STRING))
 				.build();
 		
-		HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-		
-		ObjectMapper mapper = new ObjectMapper();
-		example = mapper.readValue(response.body(), Example.class);
+		HttpResponse<String> response;
+		try {
+			response = client.send(request, HttpResponse.BodyHandlers.ofString());
+			ObjectMapper mapper = new ObjectMapper();
+			example = mapper.readValue(response.body(), Example.class);
+		} catch (IOException e) {
+			System.out.println("Failed! InputOutputException occured!");
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			System.out.println("Failed! InterruptedException occured!");
+			e.printStackTrace();
+		}
 		
 		return example;
 		
@@ -65,7 +80,7 @@ public class CallRestService {
 			winner.setRaceName(race.getRaceName());
 			results = race.getResults();
 			for (Result result: results) {
-				winner.setDriverName(result.getDriver().getGivenName() + result.getDriver().getFamilyName());
+				winner.setDriverName(result.getDriver().getGivenName() + " " + result.getDriver().getFamilyName());
 				winner.setFastestLapTime(result.getFastestLap().getTime().getTime());
 			}
 			
