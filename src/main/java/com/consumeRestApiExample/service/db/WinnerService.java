@@ -1,4 +1,4 @@
-package com.consumeRestApiExample.service.db.impl;
+package com.consumeRestApiExample.service.db;
 
 import com.consumeRestApiExample.model.domain.Winner;
 
